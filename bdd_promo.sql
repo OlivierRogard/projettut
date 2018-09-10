@@ -204,7 +204,7 @@ INSERT INTO `personnel` (`Nom`, `Prénom`, `login`, `MDP`, `id_prof`) VALUES
 ('ABGRALL', 'CHRISTOPHE', 'abgrallc', NULL, 2),
 ('BEUCHER', 'LAURENT', 'beucherl', NULL, 3),
 ('PRIGENT', 'ANNE', 'prigenta', NULL, 4),
-('GATEL', 'DAVID', 'gateld', NULL, 5),
+('GATEL', 'DAVID', 'gateld', '1234', 5),
 ('TABOURET', 'MICHEL', 'tabouretm', NULL, 6),
 ('DUMONT', 'FABIENNE', 'dumontf', NULL, 7),
 ('PASQUET', 'MAXINE', 'pasquetm', NULL, 8),
