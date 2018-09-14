@@ -1,7 +1,7 @@
 <?php
 	include('bdd_connect.php');																		//connexion à la bdd
 	session_start();
-	$edt = file_get_contents('edt/ADECal (2).ics');														//récupération du fichier calendrier
+	$edt = file_get_contents('edt/calendrier.ics');														//récupération du fichier calendrier
 
 	/*Utilisation d'expressions régulières afin de récupérer les lignes qui nous intéressent*/
 	$regExpMatiere = '/'.'SUMMARY:(.*)'.'/';														//Les '/' sont des délimiteurs
