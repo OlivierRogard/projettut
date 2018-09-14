@@ -220,7 +220,8 @@ INSERT INTO `personnel` (`Nom`, `Prénom`, `login`, `MDP`, `id_prof`) VALUES
 ('NUNES', 'JEAN-CLAUDE', 'nunesjc', NULL, 18),
 ('WEIS', 'FREDERIC', 'weisf', NULL, 19),
 ('MOTTA', 'FLAVIEN', 'mottaf', '1234', 20),
-('COLLARDEY', 'SYLVAIN', 'collardeys', NULL, 21);
+('COLLARDEY', 'SYLVAIN', 'collardeys', NULL, 21),
+('ADMIN','ADMIN','admin','admin',22);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
