@@ -191,37 +191,37 @@ CREATE TABLE IF NOT EXISTS `personnel` (
   `Prénom` text CHARACTER SET utf8 NOT NULL,
   `login` text CHARACTER SET utf8,
   `MDP` text CHARACTER SET utf8 NOT NULL,
-  `id_prof` int(11) NOT NULL
+  `id_prof` INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `personnel`
 --
 
-INSERT INTO `personnel` (`Nom`, `Prénom`, `login`, `MDP`, `id_prof`) VALUES
-('Prof', 'Prof', '1234', '1234', 0),
-('BARA', 'YANN', 'baray', NULL, 1),
-('ABGRALL', 'CHRISTOPHE', 'abgrallc', NULL, 2),
-('BEUCHER', 'LAURENT', 'beucherl', NULL, 3),
-('PRIGENT', 'ANNE', 'prigenta', NULL, 4),
-('GATEL', 'DAVID', 'gateld', '1234', 5),
-('TABOURET', 'MICHEL', 'tabouretm', NULL, 6),
-('DUMONT', 'FABIENNE', 'dumontf', NULL, 7),
-('PASQUET', 'MAXINE', 'pasquetm', NULL, 8),
-('FEREY', 'PHILIPPE', 'fereyp', NULL, 9),
-('MORVAN', 'LAURENT', 'morvanl', NULL, 10),
-('HUART', 'DEBORAH', 'huartd', '1234', 11),
-('PARIZE', 'LAURENT', 'parizel', '1234', 12),
-('CHOLLET', 'DIDIER', 'cholletd', NULL, 13),
-('BARRO', 'Oumar-Alassane', 'barrooa', NULL, 14),
-('PIEL', 'MARIE-BERNADETTE', 'pielmb', NULL, 15),
-('GAILLARD', 'THIERRY', 'gaillardt', NULL, 16),
-('SIMON', 'CLAUDE', 'simonc', NULL, 17),
-('NUNES', 'JEAN-CLAUDE', 'nunesjc', NULL, 18),
-('WEIS', 'FREDERIC', 'weisf', NULL, 19),
-('MOTTA', 'FLAVIEN', 'mottaf', '1234', 20),
-('COLLARDEY', 'SYLVAIN', 'collardeys', NULL, 21),
-('ADMIN','ADMIN','admin','admin',22);
+INSERT INTO `personnel` (`Nom`, `Prénom`, `login`, `MDP`) VALUES
+('Prof', 'Prof', '1234', '1234'),
+('BARA', 'YANN', 'baray', '1234'),
+('ABGRALL', 'CHRISTOPHE', 'abgrallc', '1234'),
+('BEUCHER', 'LAURENT', 'beucherl','1234'),
+('PRIGENT', 'ANNE', 'prigenta','1234'),
+('GATEL', 'DAVID', 'gateld', '1234'),
+('TABOURET', 'MICHEL', 'tabouretm','1234'),
+('DUMONT', 'FABIENNE', 'dumontf', '1234'),
+('PASQUET', 'MAXINE', 'pasquetm', '1234'),
+('FEREY', 'PHILIPPE', 'fereyp', '1234'),
+('MORVAN', 'LAURENT', 'morvanl', '1234'),
+('HUART', 'DEBORAH', 'huartd', '1234'),
+('PARIZE', 'LAURENT', 'parizel', '1234'),
+('CHOLLET', 'DIDIER', 'cholletd', '1234'),
+('BARRO', 'Oumar-Alassane', 'barrooa', '1234'),
+('PIEL', 'MARIE-BERNADETTE', 'pielmb','1234'),
+('GAILLARD', 'THIERRY', 'gaillardt', '1234'),
+('SIMON', 'CLAUDE', 'simonc', '1234'),
+('NUNES', 'JEAN-CLAUDE', 'nunesjc', '1234'),
+('WEIS', 'FREDERIC', 'weisf', '1234'),
+('MOTTA', 'FLAVIEN', 'mottaf', '1234'),
+('COLLARDEY', 'SYLVAIN', 'collardeys', '1234'),
+('ADMIN','ADMIN','admin','admin');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
