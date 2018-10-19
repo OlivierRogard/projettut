@@ -18,7 +18,8 @@
     </head>
     <body>
     	<header> IUT de Saint-Malo </header>
-        <h1>Feuille d'absence</h1>
+        <h1>Administration</h1>
+        <h4><a href="emploidutemps.php">Mettre à jour l'emploi du temps</a></h4>
     	<h4>Liste des étudiants au format CSV :</h4>
     	<form method="post" action="excel.php" enctype="multipart/form-data">
     		<input type="file" name="file" id="file" /><br>
@@ -27,7 +28,7 @@
     	<br><br>
     	<h4>Gérer les absences :</h4>
     	<br><br>
-    	<h4>Ajouter un intervenant</h4>
+    	<h4>Ajouter un intervenant :</h4>
     	<fieldset>
     	<form method="post" action="administration.php">
     		Nom : <input type="text" name="nom" /> <br>
