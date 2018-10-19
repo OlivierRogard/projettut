@@ -8,15 +8,15 @@
 	if ( $extension!='csv' ) echo "Extension incorrecte";
 
 	/*téléchargement du fichier sur notre serveur*/
-	$uploaddir = 'C:/wamp64/www/projet/';
+	$uploaddir = 'C:/wamp64/www/projet/listes';
 	$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 	$name = basename($fichier);
 	move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile);
 
 
 	/*on ouvre le fichier*/
-	if (file_exists($fichier)){
-     $fp = file($fichier); 
+	if (file_exists('listes/'.$fichier)){
+     $fp = file('listes/'.$fichier); 
 	}
  	else   		/*s'il n'existe pas*/
     { 
@@ -45,4 +45,5 @@
 		$req->execute(array('nom'=>$nom,'prenom'=>$prenom,'promo'=>$promo,'photo'=>$photo,'log'=>$login,'mdp'=>$mdp,'gr'=>$gr));
 
 	}
+	header('Location: administration.php');
 ?>
