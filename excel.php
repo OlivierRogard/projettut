@@ -3,11 +3,14 @@
 
 	/*on récupère le fichier avec la variable globale $_FILES*/
 	if ($_FILES['file']['error'] > 0) $erreur = "Erreur lors du transfert";
+
 	$fichier = "C:\wamp64\www\projet\listes\\".$_FILES['file']['name'];			 								//on récupère le nom du fichier csv envoyé
+
 	$extension = strtolower(  substr(  strrchr($fichier, '.')  ,1)  );			//on vérifie son extension
 	if ( $extension!='csv' ) echo "Extension incorrecte";
 
 	/*téléchargement du fichier sur notre serveur*/
+
 	$uploaddir = 'C:\wamp64\www\projet\listes\\';
 	$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 	$name = basename($fichier);
