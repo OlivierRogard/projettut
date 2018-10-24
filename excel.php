@@ -3,20 +3,23 @@
 
 	/*on récupère le fichier avec la variable globale $_FILES*/
 	if ($_FILES['file']['error'] > 0) $erreur = "Erreur lors du transfert";
-	$fichier = $_FILES['file']['name'];			 								//on récupère le nom du fichier csv envoyé
+
+	$fichier = "C:\wamp64\www\projet\listes\\".$_FILES['file']['name'];			 								//on récupère le nom du fichier csv envoyé
+
 	$extension = strtolower(  substr(  strrchr($fichier, '.')  ,1)  );			//on vérifie son extension
 	if ( $extension!='csv' ) echo "Extension incorrecte";
 
 	/*téléchargement du fichier sur notre serveur*/
-	$uploaddir = 'C:/wamp64/www/projet/listes';
+
+	$uploaddir = 'C:\wamp64\www\projet\listes\\';
 	$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 	$name = basename($fichier);
 	move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile);
-
-
+	echo $fichier;
+	
 	/*on ouvre le fichier*/
-	if (file_exists('listes/'.$fichier)){
-     $fp = file('listes/'.$fichier); 
+	if (file_exists($fichier)){
+	 $fp = file($fichier); 
 	}
  	else   		/*s'il n'existe pas*/
     { 
