@@ -15,7 +15,7 @@
         <header> IUT de Saint-Malo </header>
         <h1>Feuille d'absence</h1>
         <h4><a href="trombi.php">Trombi des étudiants manquants</a></h4>
-            <h4><a href="qrcode.php?c=<?php if(isset($_SESSION['id_cours'])) echo $cours;?>" target="_blank">Lien QR </a></h4>
+            <h4><a href="qrcode.php?c=<?php if(isset($_SESSION['id_cours'])){ echo $_SESSION['id_cours'];}?>" target="_blank">Lien QR </a></h4>
 
                 <?php
 
@@ -29,6 +29,7 @@
                         /*cours en groupe*/
                         if(strlen($promo)==5){
                             $gr=substr($promo,-1);
+                            $_SESSION['gr']=$gr;
                             $promo=substr($promo,0,-2).'A';   
                             /*affichage des étudiants en fonction de leur promo et leur groupe*/
                             $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE Groupe= ? AND id_promo = ? ORDER BY Nom');
