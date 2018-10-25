@@ -17,9 +17,10 @@
     <?php
         $id_cours= $_SESSION['id_cours'];
         $id_promo= $_SESSION['id_promo'];
-        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE etudiant.presencetemp = 0 AND etudiant.id_promo = ? ORDER BY Nom');
+        $id_groupe=$_SESSION['gr'];
+        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE etudiant.presencetemp = 0 AND etudiant.id_promo = ? AND etudiant.Groupe= ? ORDER BY Nom');
         //On récupère le contenu du tableau etudiant de la bdd
-        $reponse->execute(array($id_promo));
+        $reponse->execute(array($id_promo,$id_groupe));
         ?>
         <?php
         while ($donnees = $reponse->fetch())
@@ -55,9 +56,9 @@
         </thead>
         <tbody>
         <?php
-        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE etudiant.presencetemp = 0 AND etudiant.id_promo = ? ORDER BY Nom');
+        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE etudiant.presencetemp = 0 AND etudiant.id_promo = ? AND etudiant.Groupe= ? ORDER BY Nom');
         //On récupère le contenu du tableau etudiant de la bdd
-        $reponse->execute(array($id_promo));
+        $reponse->execute(array($id_promo,$id_groupe));
         while ($donnees = $reponse->fetch())
         {
             if ($donnees['presencetemp'] == 0) 
