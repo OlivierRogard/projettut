@@ -51,8 +51,9 @@
             </tbody>
         </table>
         <a class="btn-warning  btn-outline" href="modifs.php" role="button">Paramètres du compte</a>
-
         <a class="btn-warning btn-outline" href="faq.php" role="button">FAQ</a>
+		<a class="btn-warning btn-outline" href="justificatif.php" role="button">Envoyer un justificatif d'absence</a>
+
         <script>
                 function Deconnexion ()
                 {
