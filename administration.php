@@ -38,7 +38,33 @@
     		<input type="submit" name="submit" value="Envoyer"/>
     	</form>
     	</fieldset>
-
+		
+		<?php 
+			echo "<h2>Récupérer les justificatifs des élèves</h2><br/>";
+			//Ouvre le répertoire
+			if(!is_dir('justificatifs')){
+				mkdir('justificatifs');
+			}
+			$rep= opendir("justificatifs");
+			
+			echo "<center><table id='justif'>\n";
+			while($fichier = readdir($rep)){
+				if ($fichier!="." && $fichier!=".."){
+					echo "<tr>"
+						."<td>". $fichier ."</td>"
+						."<td><a href='justificatifs/" . $fichier ."' target='_blank'>Télécharger ce justificatif</a></td>"
+					. "</tr>\n";
+				}
+				if($fichier == "." || $fichier== "..")
+					$contenu=0;
+			} 
+			echo "</table></center>\n";
+			if ($contenu==0)
+				echo "Il n'y a aucun justificatif à récupérer.";
+			
+			closedir($rep);
+		?>
+		<br/><br/><br/><br/><br/>
     	<script>
                 function Deconnexion ()
                 {
