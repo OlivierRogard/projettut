@@ -26,8 +26,6 @@
     		<input type="submit" name="submit" value="Envoyer"/>
     	</form>
     	<br><br>
-    	<h4>Gérer les absences :</h4>
-    	<br><br>
     	<h4>Ajouter un intervenant :</h4>
     	<fieldset>
     	<form method="post" action="administration.php">
