@@ -57,10 +57,16 @@
 			if(strlen($k[3])>2){
 				list($promo,$prof1,$prof2,$export)=$k;
 				echo 'cours avec '.$prof1.' et '.$prof2;
-				$nom=explode(' ',$prof1);
-				if ($prof1 == 'MOTTA FLAVIEN'){
-					$prof1 = "Prof Prof";
+				if((substr($prof1,0,3)==substr($promo,0,3)) || ($prof1=="Economie")){
+					$prof1=$prof2;
+					$prof2=NULL;
 					$nom=explode(' ',$prof1);
+					$idpr2=1;
+				}
+				else{
+					$nom=explode(' ',$prof1);
+					$nom2=explode(' ',$prof2);
+					//print_r($nom2);
 				}
 			}
 			else{
