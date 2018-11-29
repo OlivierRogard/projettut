@@ -14,5 +14,5 @@
 	$req = $bdd->prepare("INSERT INTO `qrcode` (`horaire`, `id_cours`, `qr`) VALUES (:dt,:idc,:qr)");
 	$req->execute(array('dt'=>$date,'idc'=>$idc,'qr'=>$v));
 
-	QRcode::png("localhost/projet/validation.php?v=$v");
+	QRcode::png("localhost/projet/index.php?v=$v");
 ?>
