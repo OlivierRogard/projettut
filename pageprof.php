@@ -21,7 +21,6 @@
 
             if(isset($_SESSION['id_cours'])){
                 $cours = $_SESSION['id_cours'];
-                echo $cours;
                 /*traitement de la chaîne de caractère, identification promo*/
                 $rep=$bdd->prepare('SELECT `id_promo` FROM `cours` WHERE `id_cours` = ?');
                 $rep->execute(array($cours));
