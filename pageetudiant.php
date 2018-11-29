@@ -16,7 +16,12 @@
     </head>
     <body>
         <header> IUT de Saint-Malo </header>
-        <h1>Statistiques individuelles d'absence</h1>
+       	<h1>Statistiques individuelles d'absence de
+        <?php 
+            $rep = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE login=?');
+            $rep->execute(array($_SESSION['login']));
+            while($res=$rep->fetch()){ echo $res['Prénom'].' '.$res['Nom']; }
+        ?></h1>
         <table id="b" align="center">
             <thead>
                 <tr>
