@@ -1,5 +1,6 @@
 <?php
  session_start (); // on démarre la session
+ if(isset($_GET['v'])){ $_SESSION['v']=$_GET['v'];}
  ?>
 <!DOCTYPE html>
 <html>
