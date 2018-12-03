@@ -101,7 +101,7 @@ CREATE TABLE `geoloc` (
 --
 
 INSERT INTO `geoloc` (`Salle`, `Latitude1`, `Longitude1`, `Latitude2`, `Longitude2`, `Latitude3`, `Longitude3`, `Latitude4`, `Longitude4`) VALUES
-('Salle de conference', 48.656877, -1.969057, 48.656895, -1.968904, 48.656944, -1.196909, 48.657011, -1.968941);
+('Salle de conference', 48.656877, -1.969057, 48.656895, -1.968904, 48.657011, -1.968941, 48.656944, -1.969092);
 
 -- --------------------------------------------------------
 
