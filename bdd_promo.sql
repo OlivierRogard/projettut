@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 27 sep. 2018 à 07:52
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Hôte : 127.0.0.1
+-- Généré le :  lun. 03 déc. 2018 à 18:51
+-- Version du serveur :  10.1.37-MariaDB
+-- Version de PHP :  7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -28,16 +28,14 @@ SET time_zone = "+00:00";
 -- Structure de la table `absences`
 --
 
-DROP TABLE IF EXISTS `absences`;
-CREATE TABLE IF NOT EXISTS `absences` (
+CREATE TABLE `absences` (
   `loginetu` text NOT NULL,
   `j` int(11) DEFAULT NULL,
   `nj` int(11) DEFAULT NULL,
   `loginprof` text NOT NULL,
   `date` datetime NOT NULL,
-  `id_abs` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id_abs`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `id_abs` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `absences`
@@ -53,18 +51,15 @@ INSERT INTO `absences` (`loginetu`, `j`, `nj`, `loginprof`, `date`, `id_abs`) VA
 -- Structure de la table `cours`
 --
 
-DROP TABLE IF EXISTS `cours`;
-CREATE TABLE IF NOT EXISTS `cours` (
+CREATE TABLE `cours` (
   `Matière` text CHARACTER SET utf8 NOT NULL,
   `id_prof` int(11) NOT NULL,
   `id_promo` text CHARACTER SET utf8 NOT NULL,
   `salle` text CHARACTER SET utf8 NOT NULL,
   `debut` datetime NOT NULL,
   `fin` datetime NOT NULL,
-  `id_cours` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id_cours`)
-) ENGINE=MyISAM AUTO_INCREMENT=3513 DEFAULT CHARSET=latin1;
-
+  `id_cours` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -72,8 +67,7 @@ CREATE TABLE IF NOT EXISTS `cours` (
 -- Structure de la table `etudiant`
 --
 
-DROP TABLE IF EXISTS `etudiant`;
-CREATE TABLE IF NOT EXISTS `etudiant` (
+CREATE TABLE `etudiant` (
   `Nom` text CHARACTER SET utf8 NOT NULL,
   `Prénom` text CHARACTER SET utf8 NOT NULL,
   `id_promo` text CHARACTER SET utf8 NOT NULL,
@@ -84,21 +78,44 @@ CREATE TABLE IF NOT EXISTS `etudiant` (
   `presencetemp` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
---------------------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `geoloc`
+--
+
+CREATE TABLE `geoloc` (
+  `Salle` text NOT NULL,
+  `Latitude1` double NOT NULL,
+  `Longitude1` double NOT NULL,
+  `Latitude2` double NOT NULL,
+  `Longitude2` double NOT NULL,
+  `Latitude3` double NOT NULL,
+  `Longitude3` double NOT NULL,
+  `Latitude4` double NOT NULL,
+  `Longitude4` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `geoloc`
+--
+
+INSERT INTO `geoloc` (`Salle`, `Latitude1`, `Longitude1`, `Latitude2`, `Longitude2`, `Latitude3`, `Longitude3`, `Latitude4`, `Longitude4`) VALUES
+('Salle de conference', 48.656877, -1.969057, 48.656895, -1.968904, 48.656944, -1.196909, 48.657011, -1.968941);
+
+-- --------------------------------------------------------
 
 --
 -- Structure de la table `personnel`
 --
 
-DROP TABLE IF EXISTS `personnel`;
-CREATE TABLE IF NOT EXISTS `personnel` (
+CREATE TABLE `personnel` (
   `Nom` text CHARACTER SET utf8 NOT NULL,
   `Prénom` text CHARACTER SET utf8 NOT NULL,
   `login` text CHARACTER SET utf8,
   `MDP` text CHARACTER SET utf8 NOT NULL,
-  `id_prof` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id_prof`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+  `id_prof` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `personnel`
@@ -135,12 +152,55 @@ INSERT INTO `personnel` (`Nom`, `Prénom`, `login`, `MDP`, `id_prof`) VALUES
 -- Structure de la table `qrcode`
 --
 
-DROP TABLE IF EXISTS `qrcode`;
-CREATE TABLE IF NOT EXISTS `qrcode` (
+CREATE TABLE `qrcode` (
   `horaire` datetime NOT NULL,
   `id_cours` text CHARACTER SET utf8 NOT NULL,
   `qr` text CHARACTER SET utf8 NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `absences`
+--
+ALTER TABLE `absences`
+  ADD PRIMARY KEY (`id_abs`);
+
+--
+-- Index pour la table `cours`
+--
+ALTER TABLE `cours`
+  ADD PRIMARY KEY (`id_cours`);
+
+--
+-- Index pour la table `personnel`
+--
+ALTER TABLE `personnel`
+  ADD PRIMARY KEY (`id_prof`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `absences`
+--
+ALTER TABLE `absences`
+  MODIFY `id_abs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `cours`
+--
+ALTER TABLE `cours`
+  MODIFY `id_cours` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3513;
+
+--
+-- AUTO_INCREMENT pour la table `personnel`
+--
+ALTER TABLE `personnel`
+  MODIFY `id_prof` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
