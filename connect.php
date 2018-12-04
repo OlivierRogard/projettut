@@ -113,9 +113,7 @@ else
                     $id_promo = $rep_promo['id_promo'];
                     $gr = $rep_promo['Groupe'];
                 }
-                //  /!\ NE FONCTIONNE ENCORE QUE POUR LES COURS EN GROUPE
-                $id_promo=substr($id_promo,0,3).'G'.$gr;
-                echo $id_promo;
+                
                 $req_cours=$bdd->prepare('SELECT * FROM cours WHERE id_promo = ?');
                 $req_cours->execute(array($id_promo));
                 while($rep_cours=$req_cours->fetch()){
@@ -139,7 +137,6 @@ else
                         $chaine_temps_ref=implode(" ", $array_temps_ref);       //horaire du qr
                         $temps_ref=substr($chaine_temps_ref, 11,8);             //heure du qr
                         $temps_ref=strtotime($temps_ref);                       //passage en seconde
-                        
                         $jour=substr($chaine_temps_ref,8,2);                    //récupération du jour
                         if($jour==$jourdeb){
                             if($deb_ref<=$temps_ref){
@@ -150,7 +147,43 @@ else
                         }
                     }
                 }
-
+                if(!isset($idc)){
+                    $id_promo=substr($id_promo,0,3).'G'.$gr;
+                    echo $id_promo;
+                    $req_cours=$bdd->prepare('SELECT * FROM cours WHERE id_promo = ?');
+                    $req_cours->execute(array($id_promo));
+                    while($rep_cours=$req_cours->fetch()){
+                        $id_cours=$rep_cours['id_cours'];
+                        /*traitement des horaires*/
+                        $array_deb=array($rep_cours['debut']);                  //horaire de début
+                        $array_fin=array($rep_cours['fin']);                    //horaire de fin
+                        $chaine_deb_ref=implode(" ", $array_deb);
+                        $chaine_fin_ref=implode(" ", $array_fin);
+                        /*découpe du jour*/
+                        $jourdeb=substr($chaine_deb_ref, 8, 2);
+                        /*découpe de l'heure et passage en seconde*/
+                        $heure_deb_ref=substr($chaine_deb_ref, 11);
+                        $heure_fin_ref=substr($chaine_fin_ref, 11);
+                        $deb_ref=strtotime($chaine_deb_ref);
+                        $fin_ref=strtotime($chaine_fin_ref);
+                        // Récupération du temps de génération du QR code
+                        $req_temps_ref = $bdd->prepare('SELECT horaire FROM qrcode WHERE `id_cours` = ?');
+                        $req_temps_ref->execute(array($id_cours));
+                        while($array_temps_ref = $req_temps_ref->fetch()){
+                            $chaine_temps_ref=implode(" ", $array_temps_ref);       //horaire du qr
+                            $temps_ref=substr($chaine_temps_ref, 11,8);             //heure du qr
+                            $temps_ref=strtotime($temps_ref);                       //passage en seconde
+                            $jour=substr($chaine_temps_ref,8,2);                    //récupération du jour
+                            if($jour==$jourdeb){
+                                if($deb_ref<=$temps_ref){
+                                    if($temps_ref<=$fin_ref){
+                                        $idc=$rep_cours['id_cours'];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 //récupération de la variable du QR code
                 $req_qr= $bdd->prepare('SELECT qr FROM qrcode, cours WHERE qrcode.id_cours=cours.id_cours AND cours.id_cours = ?');
                 $req_qr->execute(array($idc));
