@@ -28,11 +28,8 @@
        exit();
     }
 
-    /*on vide la table*/
-    $del=$bdd->query('DELETE FROM `etudiant`');
 	/*lecture du fichier*/
 	foreach($fp as $ligne){
-			
 		$k = explode(",",$ligne);
 		$nom = $k[0];
 		$prenom = $k[1];
@@ -43,10 +40,15 @@
 		$mdp = substr(str_shuffle($char),26);
 		$gr = $k[3];
 
-		/*on remplit la table ligne par ligne*/
-		$req = $bdd->prepare("INSERT INTO `etudiant` (`Nom`, `Prénom`, `id_promo`,`photo`,`login`,`MDP`,`Groupe`,`presencetemp`) VALUES (:nom,:prenom,:promo,:photo,:log,:mdp,:gr,'0') ");
-		$req->execute(array('nom'=>$nom,'prenom'=>$prenom,'promo'=>$promo,'photo'=>$photo,'log'=>$login,'mdp'=>$mdp,'gr'=>$gr));
+		$req = $bdd->prepare("SELECT * FROM `etudiant` WHERE Nom = ? AND Prénom = ? AND id_promo = ? AND Groupe = ?");
+		$req->execute(array($nom,$prenom,$promo,$gr));
+		while($rep=$req->fetch()){
+			$init=1;
+		}
+		if(!isset($init)){
+			$req1 = $bdd->prepare("INSERT INTO `etudiant` (`Nom`, `Prénom`, `id_promo`,`photo`,`login`,`MDP`,`Groupe`,`presencetemp`) VALUES (:nom,:prenom,:promo,:photo,:log,:mdp,:gr,'0') ");
+			$req1->execute(array('nom'=>$nom,'prenom'=>$prenom,'promo'=>$promo,'photo'=>$photo,'log'=>$login,'mdp'=>$mdp,'gr'=>$gr));
+		}
 	}
-			
 	header('Location: administration.php');
 ?>
