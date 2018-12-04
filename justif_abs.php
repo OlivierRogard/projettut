@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	include('bdd_connect.php');
 	
 	if(!is_dir('justificatifs')){
@@ -20,7 +21,9 @@
 	$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 	$name = basename($fichier);
 	move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile);
-	
+	$loginetu=$_SESSION['login'];
+	$date=$_POST['absence'];
+	$req = $bdd->prepare("INSERT INTO `justificatif` (`loginetu`, `dateabs`, `filename`) VALUES (:logetu,:dt,:name)"); 
+	$req->execute(array('logetu'=>$loginetu,'dt'=>$date,'name'=>$name));
 	header('Location: justificatif.php');
-	
 ?>
