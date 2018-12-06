@@ -2,9 +2,13 @@
 
 <html>
     <?php
+        session_start();
         include('bdd_connect.php');
-		session_start();
+		ob_start();
+		
+        
 		$login=$_SESSION['login'];
+		
     ?>
     <head>
         <meta charset="utf-8" />
@@ -76,5 +80,7 @@
         </script>
         <button class="btn-warning btn-outline" onclick="Deconnexion()">Deconnexion</button>
     </body>
-
+<?php 
+ob_end_flush();
+?>
 </html>
