@@ -26,6 +26,8 @@
     		<input type="submit" name="submit" value="Envoyer"/>
     	</form>
     	<br><br>
+    	<h4>Gérer les absences :</h4>
+    	<br><br>
     	<h4>Ajouter un intervenant :</h4>
     	<fieldset>
     	<form method="post" action="administration.php">
@@ -38,6 +40,7 @@
     	</fieldset>
 		
 		<?php 
+			$abs=$bdd->query('SELECT * FROM justificatif,etudiant WHERE etudiant.login=justificatif.loginetu');
 			echo "<h2>Récupérer les justificatifs des élèves</h2><br/>";
 			//Ouvre le répertoire
 			if(!is_dir('justificatifs')){
@@ -48,18 +51,23 @@
 			echo "<center><table id='justif'>\n";
 			while($fichier = readdir($rep)){
 				if ($fichier!="." && $fichier!=".."){
-					echo "<tr>"
-						."<td>". $fichier ."</td>"
-						."<td><a href='justificatifs/" . $fichier ."' target='_blank'>Télécharger ce justificatif</a></td>"
-					. "</tr>\n";
+					
+					while ($justif=$abs->fetch()){
+						$nom=$justif['Nom'];
+						$prenom=$justif['Prénom'];
+						$fichier=$justif['filename'];
+						$date=$justif['dateabs'];
+						$heure=substr($date,10,18);
+						$date=substr($date,0,-9);
+						echo "<tr>";
+							echo "<td>Absence de $prenom $nom le $date à $heure</td>";
+							echo "<td><a href='justificatifs/" . $fichier ."' target='_blank'>Télécharger le justificatif</a></td>";
+						echo "</tr>\n";
+					}
+					
 				}
-				if($fichier == "." || $fichier== "..")
-					$contenu=0;
 			} 
 			echo "</table></center>\n";
-			if ($contenu==0)
-				echo "Il n'y a aucun justificatif à récupérer.";
-			
 			closedir($rep);
 		?>
 		<br/><br/><br/><br/><br/>
