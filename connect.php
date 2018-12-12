@@ -6,13 +6,13 @@ $mdp=$_POST['mdp'];
 include('bdd_connect.php');
 
 //Première étape : Authentification d'un enseignant
-$verif_login = $bdd->prepare('SELECT COUNT(*) FROM bdd_promo.personnel WHERE login = ?'); //On vérifie que le login existe dans la table
+$verif_login = $bdd->prepare('SELECT COUNT(*) FROM personnel WHERE login = ?'); //On vérifie que le login existe dans la table
 $verif_login->execute(array($login));
 // Si le login rentré correspond à un login d'enseignant
 if($verif_login->fetchColumn() != 0)  
 {    
     // Sélection du password pour le login saisi
-    $verif_mdp = $bdd->prepare('SELECT MDP FROM bdd_promo.personnel WHERE login = ? LIMIT 1'); // Préparation de la requête
+    $verif_mdp = $bdd->prepare('SELECT MDP FROM personnel WHERE login = ? LIMIT 1'); // Préparation de la requête
     $verif_mdp->execute(array($login));                                           // Exécution
     if ($mdp == $verif_mdp->fetchColumn())                                        // Si le mot de passe correspond (enseignant)
     {
@@ -86,13 +86,13 @@ if($verif_login->fetchColumn() != 0)
 else 
 {
     //On vérifie que le login existe dans la table étudiant
-    $verif_login = $bdd->prepare('SELECT COUNT(*) FROM bdd_promo.etudiant WHERE login = ?'); 
+    $verif_login = $bdd->prepare('SELECT COUNT(*) FROM etudiant WHERE login = ?'); 
     $verif_login->execute(array($login));
     // Si le login existe dans la table étudiant
     if($verif_login->fetchColumn() !=0) 
     {    
         // Sélection du password pour le login saisi
-        $verif_mdp = $bdd->prepare('SELECT MDP FROM bdd_promo.etudiant WHERE login = ? LIMIT 1'); // Préparation de la requête
+        $verif_mdp = $bdd->prepare('SELECT MDP FROM etudiant WHERE login = ? LIMIT 1'); // Préparation de la requête
         $verif_mdp->execute(array($login)); // Exécution
          //Si le mot correpond au mot de passe d'un étudiant
         if ($mdp == $verif_mdp->fetchColumn())
@@ -197,7 +197,7 @@ else
                 {
                     if ($_SESSION['v']==$qr_code)
                     {
-                        $req = $bdd->prepare('UPDATE bdd_promo.etudiant SET `presencetemp` = 1 WHERE login = ?');
+                        $req = $bdd->prepare('UPDATE etudiant SET `presencetemp` = 1 WHERE login = ?');
                         $req->execute(array($login));
                         echo "<script> alert('Votre présence a bien été enregistrée (sous réserve de validation de l'enseignant')</script>";
                         header('Location:pageetudiant.php');
