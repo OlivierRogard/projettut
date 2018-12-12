@@ -42,16 +42,16 @@
 						$date2="Absence du ".$date." à ".$heure;
 						echo "<select name='absence'>";
 						echo "<option value='$date $heure'>$date2</option>";
-						echo "</select>";
+					
 					}
 					else 
 						$abs=2;
 						
 				}
 				if ($abs==2)
-					echo "Ce n'est plus possible de justifier l'absence du $date.";
-				
-				if ($abs!=0 && $abs!=2){
+					echo "<option disabled>Ce n'est plus possible de justifier l'absence du $date.</option>";
+					echo "</select>";
+				if ($abs!=0){
 					echo "<input type='file' name='file' id='file' /><br>";
 					echo "<input type='submit' name='submit' value='Envoyer'/>";
 				}
