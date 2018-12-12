@@ -32,11 +32,11 @@
                         //$_SESSION['gr']=$gr;
                         $nvpromo=substr($promo,0,-2).'A';
                         /*affichage des étudiants en fonction de leur promo et leur groupe*/
-                        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE Groupe = ? AND id_promo = ? ORDER BY Nom');
+                        $reponse = $bdd->prepare('SELECT * FROM etudiant WHERE Groupe = ? AND id_promo = ? ORDER BY Nom');
                         $reponse->execute(array($gr,$nvpromo)); 
                     } 
                     if(strlen($promo)==4){
-                        $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE id_promo = ? ORDER BY Nom');
+                        $reponse = $bdd->prepare('SELECT * FROM etudiant WHERE id_promo = ? ORDER BY Nom');
                         $reponse->execute(array($promo));
                     }
                     $_SESSION['id_promo']=$promo;
@@ -63,7 +63,7 @@
             <?php
             while ($res = $reponse->fetch())                                         //On affiche une nouvelle ligne par étudiant trouvé
             {
-                $abs = $bdd->prepare('SELECT * FROM bdd_promo.etudiant,bdd_promo.absences WHERE etudiant.login=? AND etudiant.login=absences.loginetu');
+                $abs = $bdd->prepare('SELECT * FROM etudiant,absencesdemij WHERE etudiant.login=? AND etudiant.login=absencesdemij.loginetu');
                 $abs->execute(array($res['login']));
                 $jtot=0;
                 $njtot=0;
