@@ -100,7 +100,7 @@ else
              //on stocke les variables dans les variables de session
             $_SESSION['login']=$_POST['login'];
             $_SESSION['mdp']=$_POST['mdp'];
-            $verif_mdp->closeCursor(); // Termine le traitement de la requête mdp
+            //$verif_mdp->closeCursor(); // Termine le traitement de la requête mdp
 
             if(isset($_SESSION['v']))
             {                    
@@ -142,6 +142,7 @@ else
                             if($deb_ref<=$temps_ref){
                                 if($temps_ref<=$fin_ref){
                                     $idc=$rep_cours['id_cours'];
+                                    $salle=$rep_cours['salle'];
                                 }
                             }
                         }
@@ -178,6 +179,7 @@ else
                                 if($deb_ref<=$temps_ref){
                                     if($temps_ref<=$fin_ref){
                                         $idc=$rep_cours['id_cours'];
+                                        $salle=$rep_cours['salle'];
                                     }
                                 }
                             }
@@ -201,6 +203,33 @@ else
                         $req->execute(array($login));
                         echo "<script> alert('Votre présence a bien été enregistrée (sous réserve de validation de l'enseignant')</script>";
                         header('Location:pageetudiant.php');
+
+                        $lat=$_POST['lat'];
+                        $lon=$_POST['lon'];
+                        //recherche dans la BDD les salles avec leurs coordonnees
+                        $rep = $bdd->prepare('SELECT * FROM geoloc WHERE Salle=?');
+                        $rep->execute(array($salle));
+                        while($pos=$rep->fetch()){
+                            //mise en place des coordonnees de la salle choisie dans des variables utilisables
+                            $lat1=$pos['Latitude1'];
+                            $lat2=$pos['Latitude2'];
+                            $lat3=$pos['Latitude3'];
+                            $lat4=$pos['Latitude4'];
+                            $lon1=$pos['Longitude1'];
+                            $lon2=$pos['Longitude2'];
+                            $lon3=$pos['Longitude3'];
+                            $lon4=$pos['Longitude4'];
+                                if ((($lat1 <= $lat) && ($lat <= $lat2)) || (($lat4 <= $lat) && ($lat <= $lat3))){ //mise en place du périmètre pour la longitude
+                                    if ((($lon1 <= $lon) && ($lon <= $lon3)) || (($lon4 <= $lon) && ($lon <= $lon3))){ //mise en place du périmètre pour la longitude               
+                                        $req = $bdd->prepare('UPDATE bdd_promo.etudiant SET `presencetemp` = 1 WHERE login = ?');
+                                        $req->execute(array($login));
+                                        echo "<script> alert('Votre présence a bien été enregistrée (sous réserve de validation de l'enseignant')</script>";
+                                        header('Location:pageetudiant.php');
+                                    }
+                                    else{ echo "<script> alert('Pas à la bonne position')</script>";}
+                                }
+                                else{ echo "<script> alert('Pas à la bonne position')</script>";}
+                        }
                     }
                 }
             }
