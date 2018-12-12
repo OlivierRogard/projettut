@@ -16,43 +16,42 @@
     </head>
     <body>
         <header> IUT de Saint-Malo </header>
-       	<h1>Statistiques individuelles d'absence de
-        <?php 
-            $rep = $bdd->prepare('SELECT * FROM bdd_promo.etudiant WHERE login=?');
-            $rep->execute(array($_SESSION['login']));
-            while($res=$rep->fetch()){ echo $res['Prénom'].' '.$res['Nom']; }
-        ?></h1>
+        <h1>Statistiques individuelles d'absence</h1>
         <table id="b" align="center">
             <thead>
                 <tr>
                     <td>Absences justifiées </td>
                     <td>Absence injustifiées</td>
                     <td>Date</td>
+                    <td>Demi-journée d'absence</td>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $jtotal=0;
                 $njtotal=0;
-                $reponse = $bdd->prepare('SELECT * FROM bdd_promo.etudiant,bdd_promo.absences WHERE etudiant.login=? AND etudiant.login=absences.loginetu');
+                $reponse = $bdd->prepare('SELECT * FROM etudiant,absencesdemij WHERE etudiant.login=? AND etudiant.login=absencesdemij.loginetu');
                 $reponse->execute(array($_SESSION['login']));
                 while ($res =$reponse->fetch())    
                 {
+                if (($res['heure']<"12:15:00") &&($res['heure']>"08:00:00"))
+                        $demij="matinée";
+                elseif (($res['heure']<"19:00:00") &&($res['heure']>"13:45:00"))  
+                        $demij="après-midi";
                 ?>
                 <tr>
                     <td><?php echo $res['j']; ?></td>
                     <td><?php echo $res['nj']; ?></td>
                     <td><?php echo $res['date']; ?></td>
+                    <td><?php echo $demij?></td>
                 </tr>
                 <?php
                     $jtotal = $res['j']+$jtotal;
                     $njtotal=$res['nj']+$njtotal;
+                    
                 }
                 $reponse->closeCursor();                                                //Termine le traitement de la requête
                 ?>
-                <tr>
-                    <td><?php echo $jtotal; ?></td>
-                    <td><?php echo $njtotal; ?></td>
             </tbody>
         </table>
         <a class="btn-warning  btn-outline" href="modifs.php" role="button">Paramètres du compte</a>
