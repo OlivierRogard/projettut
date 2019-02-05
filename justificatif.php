@@ -2,7 +2,9 @@
 
 <html>
     <?php
-        include('bdd_connect.php')
+        include('bdd_connect.php');
+		session_start();
+		$login=$_SESSION['login'];
     ?>
     <head>
         <meta charset="utf-8" />
@@ -14,11 +16,62 @@
         <header> IUT de Saint-Malo </header>
         <h1>Statistiques individuelles d'absence</h1>
         
-		<form method="post" action="justif_abs.php" enctype="multipart/form-data">
-    		<input type="file" name="file" id="file" /><br>
-    		<input type="submit" name="submit" value="Envoyer"/>
+		<form method="post" action="justif_abs.php" enctype="multipart/form-data">		
+			<input id="btn" value="1" type="checkbox" onchange="cocherdécocher(this.checked)" /> Tout sélectionner/désélectionenr<br/><br/>
+			<?php $reponse = $bdd->prepare('SELECT * FROM absencesdemij WHERE loginetu=?');	//Sélection des absences correspondants à l'étudiant
+				$reponse->execute(array($login));
+				$abs=0;
+				
+				while ($res =$reponse->fetch()){	
+					$abs=1;
+					//$heure=$res['heure'];
+					$dateabs=$res['date'];
+					$heureabs=$res['heure'];
+					$date=strtotime($dateabs." ".$heureabs);
+					$dateact=strtotime(date('Y-m-d m:i'));
+					$res=abs($dateact-$date);
+					$anneeabs=substr($dateabs,0,-6);
+					$moisabs=substr($dateabs,5,-3);
+					$jourabs=substr($dateabs,8,10);
+					$date=$jourabs."-".$moisabs."-".$anneeabs;
+					if ($res['j']==0){
+						if ($res<=100800){		//Si l'absence date d'il y a moins de 2 jours possiblité d'envoyer un justificatif
+							$date2="Absence du ".$date." à ".$heureabs;
+							$date3=$date." ".$heureabs;
+							echo "<input type='checkbox' name='absence[]' value='$date3'/><label>$date2</label><br/>";
+						}
+						else 	//Si les 2 jours sont passés
+							$abs=2;
+					}
+				}
+				if ($abs==2)
+					echo "<br/>Ce n'est plus possible de justifier l'absence du $date.";
+				
+				echo "<input type='file' name='file' id='file' /><br>";
+				echo "<input type='submit' name='submit' value='Envoyer'/>";
+				if ($abs==0)	//S'il n'y a aucune absence à justifier
+					echo "<br/>Vous n'avez aucune absence à justifier.";
+				?>
     	</form>
-		
+		<script>
+			function cocherdécocher(){
+				var btn =document.getElementById('btn');	//on récupère le bouton cocher décocher
+				var action = btn.value;
+				var cases = document.getElementsByTagName('input');	// on recupere tous les INPUT
+				for (var i = 0; i < cases.length; i++) {	//on parcourt les différentes input
+					if (cases[i].type == 'checkbox'){		//si c'est une checkbox
+						if (action==1){						
+							cases[i].checked = true;		//on la coche si elle est décochée (elle est décochée de base)
+							btn.value=0;
+						}
+						else{
+							cases[i].checked = false;		//on la décoche si elle est cochée
+							btn.value=1;
+						}
+					}	
+				}
+			}
+		</script>
         <a class="btn-warning  btn-outline" href="modifs.php" role="button">Paramètres du compte</a>
         <a class="btn-warning btn-outline" href="faq.php" role="button">FAQ</a>
 		<a class="btn-warning btn-outline" href="pageetudiant.php" role="button">Retour</a>
